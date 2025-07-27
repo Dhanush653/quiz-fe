@@ -3,12 +3,19 @@ import { Email, Lock, Visibility, VisibilityOff, PersonAdd } from '@mui/icons-ma
 import UserService from '../../service/userService';
 import { loginPageProps, registrationProps } from '../Types/types';
 import { useNavigate } from 'react-router-dom';
+import CustomSnackbar from '../SnackBar/CustomSnackbar';
+import { snackbar } from '../Types/types';
 import './loginPage.css';
 
 const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [snackbar, setSnackbar] = useState<snackbar>({
+    snackbarOpen: false,
+    snackBarMessage: '',
+    snackbarType: 'success'
+  });
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState<loginPageProps>({
     email: '',
@@ -32,21 +39,27 @@ const LoginPage = () => {
         if(response && response.status === 200){
             localStorage.setItem('userInfo', JSON.stringify(response.data));
             navigate('/dashboard');
+        } else {
+          setSnackbar({snackbarOpen: true, snackBarMessage: 'Login failed. Please check your credentials', snackbarType: 'error'});
         }
         } else {
         if (registerData.password !== registerData.confirmPassword) {
-            alert('Passwords do not match!');
-            return;
+          setSnackbar({snackbarOpen: true, snackBarMessage: 'Password not match', snackbarType: 'error'});
+          return;
         }
         const response = await UserService.register({
             email: registerData.email,
             password: registerData.password,
             isAdmin: registerData.isAdmin
         });
-        console.log(response);
+        if(response && response.status === 200) {
+            setSnackbar({snackbarOpen: true, snackBarMessage: 'Registration successful', snackbarType: 'success'});
+            setIsLogin(true);
+        }
         }
     } catch (error) {
         console.error("Error during form submission:", error);
+        setSnackbar({snackbarOpen: true, snackBarMessage: 'Login failed. Please check your credentials', snackbarType: 'error'});
     } finally {
         setLoginData({ email: '', password: '' });
         setRegisterData({ email: '', password: '', confirmPassword: '', isAdmin: false });
@@ -60,6 +73,7 @@ const LoginPage = () => {
         setIsLogin(!isLogin)
     } catch (error) {
         console.error("Error toggling form:", error);
+        setSnackbar({snackbarOpen: true, snackBarMessage: 'Error please try later', snackbarType: 'error'});
     } finally {
         setLoginData({ email: '', password: '' });
         setRegisterData({ email: '', password: '', confirmPassword: '', isAdmin: false });
@@ -200,6 +214,12 @@ const LoginPage = () => {
           </button>
         </div>
       </div>
+      <CustomSnackbar 
+        message = {snackbar.snackBarMessage}
+        type = {snackbar.snackbarType}
+        open = {snackbar.snackbarOpen}
+        onClose={() => setSnackbar({snackbarOpen: false, snackBarMessage: '', snackbarType: 'success'})}
+      />
     </div>
   );
 };
