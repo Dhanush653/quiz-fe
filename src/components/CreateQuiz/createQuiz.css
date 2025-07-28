@@ -1,0 +1,211 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  /* New: Expansive and professional blue-to-purple gradient background */
+  background: linear-gradient(135deg, #6a85b6 0%, #bac8e0 100%);
+  font-family: 'Roboto', sans-serif;
+  color: #333f48; /* Dark grey for default text */
+}
+
+.create-quiz-container {
+  padding: 2rem; /* Adjusted padding for full-screen feel */
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align to top */
+  box-sizing: border-box;
+  width: 100%; /* Ensure container takes full width */
+}
+
+/* New: Wrapper for main content to control its width and position, without being a "card" */
+.main-quiz-content-area {
+  width: 100%;
+  max-width: 1000px; /* Allow content to be wider */
+  padding: 2.5rem 3.5rem; /* Generous padding inside for spacious feel */
+  border-radius: 20px; /* More rounded corners for modern feel */
+  background-color: rgba(255, 255, 255, 0.7); /* Translucent white background */
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); /* Soft, prominent shadow to give depth */
+  backdrop-filter: blur(5px); /* Subtle blur effect behind the content for modern glass-like feel */
+  -webkit-backdrop-filter: blur(5px); /* For Safari support */
+}
+
+.page-title {
+  text-align: center;
+  margin-bottom: 2.5rem !important;
+  color: #00897b !important; /* New: Vibrant teal for page title */
+  font-weight: 700 !important;
+  letter-spacing: 1px;
+  font-size: 2.8rem !important; /* Larger font size for impact */
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Subtle text shadow */
+}
+
+.quiz-stepper {
+  margin-bottom: 3rem;
+  padding: 1rem 0; /* Add padding to stepper area */
+  background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background for stepper */
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Custom styles for Stepper StepIconComponent */
+.MuiStepIcon-root {
+  color: #bbdefb !important; /* Lighter blue for default step icon, blends with background */
+  font-size: 2rem !important; /* Slightly larger icons */
+}
+
+.MuiStepIcon-root.Mui-active {
+  color: #00897b !important; /* New: Vibrant teal for active step icon */
+}
+
+.MuiStepIcon-root.Mui-completed {
+  color: #4caf50 !important; /* Green for completed step icon */
+}
+
+.MuiStepLabel-label {
+    font-weight: 600 !important;
+    color: #333f48 !important; /* Dark text for labels */
+}
+
+.MuiStepLabel-label.Mui-active {
+    color: #00897b !important; /* Active label color matches icon */
+}
+
+.MuiStepLabel-label.Mui-completed {
+    color: #4caf50 !important; /* Completed label color matches icon */
+}
+
+/* New: Styles for the content sections (formerly "form-card") */
+.form-section-content {
+  background-color: rgba(255, 255, 255, 0.85); /* More opaque white for content */
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Clearer shadow for content sections */
+  padding: 2.5rem; /* Ample padding */
+  margin-bottom: 2rem; /* Space between sections */
+}
+
+.card-section-title {
+  color: #333f48 !important; /* Dark text for section titles on content areas */
+  font-weight: 600 !important;
+  margin-bottom: 1.8rem !important; /* More space below title */
+  border-bottom: 1px solid #e0e0e0; /* Subtle separator */
+  padding-bottom: 0.8rem;
+  font-size: 1.8rem !important; /* Larger for section titles */
+}
+
+/* Styles for individual question items (formerly "question-card") */
+.question-item-content {
+  background-color: #ffffff; /* Pure white for inner question card */
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08); /* Lighter shadow for individual questions */
+  padding: 1.8rem; /* Good padding for questions */
+  margin-bottom: 1.5rem; /* Space between questions */
+  border: 1px solid #f0f0f0; /* Very light border */
+}
+
+.question-number {
+  color: #00897b; /* Teal for question numbers */
+  font-weight: 600 !important;
+  margin-bottom: 1rem !important;
+  font-size: 1.3rem !important;
+}
+
+.questions-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Material-UI TextField custom styles for better aesthetics */
+.MuiTextField-root {
+  margin-bottom: 1.5rem !important; /* Increased margin for spacing */
+}
+
+.MuiOutlinedInput-root {
+  border-radius: 10px !important; /* Slightly more rounded inputs */
+  background-color: #f8f8f8; /* Light background for inputs */
+}
+
+.MuiInputLabel-root.Mui-focused {
+  color: #00897b !important; /* Vibrant teal label color when focused */
+}
+
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #00897b !important; /* Vibrant teal border color when focused */
+  border-width: 2px !important;
+}
+
+.MuiInputLabel-root {
+  color: #757575 !important;
+}
+
+.MuiButton-root {
+  text-transform: none !important;
+  font-weight: 600 !important;
+  border-radius: 10px !important; /* More rounded buttons */
+  padding: 12px 25px; /* Larger padding for buttons */
+  transition: all 0.3s ease-in-out; /* Smooth transitions */
+}
+
+.MuiButton-contained {
+  background-color: #00897b !important; /* Vibrant teal for contained buttons */
+  box-shadow: 0 5px 15px rgba(0, 137, 123, 0.3) !important; /* Clearer shadow */
+  color: #ffffff !important;
+}
+
+.MuiButton-contained:hover {
+  background-color: #00695c !important; /* Darker teal on hover */
+  box-shadow: 0 8px 20px rgba(0, 137, 123, 0.4) !important;
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.stepper-button {
+  min-width: 140px; /* Wider buttons */
+}
+
+.submit-button {
+  background-color: #4caf50 !important; /* Professional green for submit */
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3) !important;
+}
+
+.submit-button:hover {
+  background-color: #388e3c !important;
+  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4) !important;
+  transform: translateY(-2px);
+}
+
+.dashboard-button {
+  border-color: #00897b !important; /* Vibrant teal border for dashboard */
+  color: #00897b !important; /* Vibrant teal text for dashboard */
+}
+
+.dashboard-button:hover {
+  background-color: rgba(0, 137, 123, 0.08) !important; /* Light hover effect */
+  transform: translateY(-2px);
+}
+
+.add-question-button {
+    /* Uses .MuiButton-contained styles, but adding specific padding if needed */
+    margin-top: 1.5rem; /* Ensure proper spacing */
+}
+
+.review-summary {
+  background-color: #e0f2f7; /* New: Light, opaque blue-green for summary */
+  padding: 2rem;
+  border-radius: 10px;
+  margin-top: 2.5rem; /* More space above summary */
+  border: 1px solid #b2ebf2; /* Subtle border */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Soft inner shadow */
+}
+
+.review-summary p {
+  margin-bottom: 0.6rem;
+  color: #333f48;
+}
+
+.review-summary strong {
+  color: #005a4d; /* Deeper teal for strong text in summary */
+}
+
+/* Snackbar styles are handled by MUI Alert component, no custom CSS needed here */

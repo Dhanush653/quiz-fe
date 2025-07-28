@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './dashboard.css';
 import QuizCard from './quizCard/quizCard';
 import userService from '../../service/userService';
@@ -7,6 +8,7 @@ import { adminDashboardData } from '../Types/types';
 const Dashboard = () => {
   const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
   const isAdmin = userInfo.admin || false;
+  const navigate = useNavigate();
 
   const [search, setSearch] = useState('');
   const [adminDashboardData, setAdminDashboardData] = useState<adminDashboardData>({
@@ -16,9 +18,9 @@ const Dashboard = () => {
     adminScreenDTOS: []
   });
 
-  // const filteredQuizzes = quizzes.filter(q =>
-  //   q.title.toLowerCase().includes(search.toLowerCase())
-  // );
+  const filteredQuizzes = adminDashboardData.adminScreenDTOS.filter(q =>
+    q.title.toLowerCase().includes(search.toLowerCase())
+  );
 
   const fetchData = async () => {
     try {
@@ -57,37 +59,46 @@ const Dashboard = () => {
     fetchData();
   },[]);
 
+  const handleCreateQuiz = () => {
+    navigate('/create-quiz');
+  }
+
   return (
     <div className="dashboard-container">
       {isAdmin && (
         <div className="summary-section">
-          <div className="summary-box" data-label="Total Quizzes">
+          <div className="summary-box active-summary" data-label="Total Quizzes">
             <span className="summary-value">{adminDashboardData.noOfRooms}</span>
           </div>
-          <div className="summary-box" data-label="Active Quizzes">
+          <div className="summary-box active-summary" data-label="Active Quizzes">
             <span className="summary-value">{adminDashboardData.noOfActiveRooms}</span>
           </div>
-          <div className="summary-box" data-label="Inactive Quizzes">
+          <div className="summary-box inactive-summary" data-label="Inactive Quizzes">
             <span className="summary-value">{adminDashboardData.noOfInactiveRooms}</span>
           </div>
         </div>
       )}
 
       <div className="dashboard-actions">
-        {isAdmin && <button className="create-button">Create Quiz Room</button>}
-        <input
-          className="search-bar"
-          type="text"
-          placeholder="Search quizzes..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        {isAdmin && <button className="create-button" onClick={handleCreateQuiz}>Create Quiz Room</button>}
+        <div className="search-wrapper">
+          <input
+            className="search-bar"
+            type="text"
+            placeholder="Search quizzes..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
       </div>
 
       <div className="quiz-list">
-        {adminDashboardData.adminScreenDTOS.map((quiz) => (
+        {filteredQuizzes.map((quiz) => (
           <QuizCard key={quiz.id} quiz={quiz} isAdmin={isAdmin} />
         ))}
+        {filteredQuizzes.length === 0 && (
+            <p className="no-quizzes-message">No quizzes found matching your search.</p>
+        )}
       </div>
     </div>
   );
