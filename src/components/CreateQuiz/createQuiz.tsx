@@ -93,7 +93,7 @@ const CreateQuiz = () => {
     navigate('/dashboard');
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const payload = {
       title,
       description,
@@ -106,10 +106,17 @@ const CreateQuiz = () => {
       })),
       participantEmails: emails.split(',').map(email => email.trim()).filter(Boolean),
     };
-    console.log('Submitting payload:', payload);
-    showSnackbar('Quiz created successfully!', 'success');
-    dashboardService.createQuizRoom(payload);
-    navigate('/dashboard');
+    try {
+      const response = await dashboardService.createQuizRoom(payload);
+      if (response && response.status === 200) {
+        showSnackbar('Quiz created successfully!', 'success');
+        navigate('/dashboard');
+      } else {
+        showSnackbar('Failed to create quiz. Please try again.', 'error');
+      }
+    } catch (error) {
+      showSnackbar("Error creating quiz: ", 'error');
+    }
   };
 
   const steps = [

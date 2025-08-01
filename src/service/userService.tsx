@@ -2,7 +2,6 @@ import axios from "axios";
 import { loginPageProps, registrationProps } from "../components/Types/types";
 
 const baseURL = "http://localhost:8080/api/user";
-const token = JSON.parse(localStorage.getItem('userInfo') || '{}').token;
 
 class UserService {
     register(registerPayload: registrationProps) {
@@ -23,6 +22,7 @@ class UserService {
 
     getAdminDashboard() {
         try {
+            const token = JSON.parse(localStorage.getItem('userInfo') || '{}')?.token;
             return axios.get(`${baseURL}/get-rooms/admin`, {headers: {Authorization: `Bearer ${token}`}});
         } catch (error) {
             console.error("Error fetching admin dashboard:", error);
